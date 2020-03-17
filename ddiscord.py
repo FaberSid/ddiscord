@@ -108,7 +108,10 @@ def get_token():
 
 def main():
     token = get_token()
-    client = discord.Client()
+    if len(sys.argv) > 2 and sys.argv[2] in ['-s', '-shard']:
+        client = discord.AutoShardedClient()
+    else:
+        client = discord.Client()
     client.loop.create_task(run_debugger(client))
     client.run(token)
 
