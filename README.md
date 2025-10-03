@@ -40,19 +40,11 @@ Example session:
     >>>
 
 ## Installation
-    # Run without installing globally (recommended)
-    uvx --from ddiscord ddiscord
 
-    # Or install into the current uv-managed environment
-    uv add ddiscord
-
-    # Install as a uv tool from a Git repo (alternative)
-    # Template
-    uv tool install git+https://github.com/user/repo
-    # Example (this fork)
+    # Install as a uv tool from a Git repo
     uv tool install git+https://github.com/FaberSid/ddiscord
 
-After installing as a uv tool, invoke it directly:
+After installing, invoke it directly:
 
     ddiscord
 
@@ -67,22 +59,14 @@ There are multiple ways to log into your bot in ddiscord. They are listed below 
 
 Examples:
 
-    # With uvx (no install)
-    uvx --from ddiscord ddiscord 'YOUR TOKEN HERE'
-    echo 'YOUR TOKEN HERE' | uvx --from ddiscord ddiscord -
-    echo 'YOUR TOKEN HERE' > token
-    uvx --from ddiscord ddiscord
-
-    # From local source
-    uv run ddiscord 'YOUR TOKEN HERE'
-    echo 'YOUR TOKEN HERE' | uv run ddiscord -
-    echo 'YOUR TOKEN HERE' > token
-    uv run ddiscord
+    # After installation with uv tool install
+    ddiscord 'YOUR TOKEN HERE'
+    ddiscord
 
 PowerShell (Windows) environment variable example:
 
     $env:DISCORD_TOKEN = "YOUR TOKEN HERE"
-    uv run ddiscord
+    ddiscord
 
 Note: Privileged intents are disabled by default. Enable them in the Developer Portal if needed or adjust the intents in code.
 
