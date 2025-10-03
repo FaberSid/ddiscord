@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# Token file
+token

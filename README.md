@@ -1,14 +1,29 @@
-ddiscord: debugger for discord.py
+ddiscord: debugger for discord.py v2
 =====
 
-Powered by [discord.py](https://github.com/Rapptz/discord.py).
-This helps you write code for discord.py and manage your server via one-liner programs.
-Tested on discord.py v1.0.0 but in theory it works on v0.16.7 and above.
+[![License](https://img.shields.io/badge/license-MIT-informational.svg)](./LICENSE)
+[![Python](https://img.shields.io/badge/python-3.13-blue.svg)](#)
+[![Fork](https://img.shields.io/badge/Fork-FaberSid%2Fddiscord-informational.svg)](https://github.com/FaberSid/ddiscord)
 
-## Usage
-    $ ddiscord
+Powered by [discord.py](https://github.com/Rapptz/discord.py). Tested on discord.py v2.6+.
+
+## Usage (with uv)
+
+Run without installing (via uvx):
+
+    # From this fork (example; no install)
+    uvx --from git+https://github.com/FaberSid/ddiscord ddiscord
+
+From local source (inside the project directory):
+
+    # Uses project's interpreter and dependencies
+    uv run ddiscord
+
+Example session:
+
+    $ uvx --from git+https://github.com/FaberSid/ddiscord ddiscord
      - Debugger for discord.py -
-    Running on Python 3.7.2. Send EOF (Ctrl-D) to exit.
+    Running on Python 3.13.6. Send EOF (Ctrl-Z) to exit.
     Logged in as YourBot#0000 (012345678901234567)
     You can refer to your Client instance as `client` variable. i.e. client.guilds
     
@@ -25,10 +40,24 @@ Tested on discord.py v1.0.0 but in theory it works on v0.16.7 and above.
     >>>
 
 ## Installation
-    $ python3 -m pip install ddiscord
+    # Run without installing globally (recommended)
+    uvx --from ddiscord ddiscord
+
+    # Or install into the current uv-managed environment
+    uv add ddiscord
+
+    # Install as a uv tool from a Git repo (alternative)
+    # Template
+    uv tool install git+https://github.com/user/repo
+    # Example (this fork)
+    uv tool install git+https://github.com/FaberSid/ddiscord
+
+After installing as a uv tool, invoke it directly:
+
+    ddiscord
 
 ## Logging On
-There are four ways to log into your bot in ddiscord. They are listed below in look up order.
+There are multiple ways to log into your bot in ddiscord. They are listed below in look up order.
 
 1. Passing your token as an argument.
 2. Passing your token via standard input. `-` is needed as a first argument.
@@ -38,7 +67,22 @@ There are four ways to log into your bot in ddiscord. They are listed below in l
 
 Examples:
 
-    $ ddiscord 'YOUR TOKEN HERE'
-    $ echo 'YOUR TOKEN HERE' | ddiscord -
-    $ echo 'YOUR TOKEN HERE' >token; ddiscord
-    $ env DISCORD_TOKEN='YOUR TOKEN HERE' ddiscord
+    # With uvx (no install)
+    uvx --from ddiscord ddiscord 'YOUR TOKEN HERE'
+    echo 'YOUR TOKEN HERE' | uvx --from ddiscord ddiscord -
+    echo 'YOUR TOKEN HERE' > token
+    uvx --from ddiscord ddiscord
+
+    # From local source
+    uv run ddiscord 'YOUR TOKEN HERE'
+    echo 'YOUR TOKEN HERE' | uv run ddiscord -
+    echo 'YOUR TOKEN HERE' > token
+    uv run ddiscord
+
+PowerShell (Windows) environment variable example:
+
+    $env:DISCORD_TOKEN = "YOUR TOKEN HERE"
+    uv run ddiscord
+
+Note: Privileged intents are disabled by default. Enable them in the Developer Portal if needed or adjust the intents in code.
+
