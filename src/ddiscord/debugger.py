@@ -54,17 +54,19 @@ class AsyncInteractiveDebugger:
                 if not body:
                     continue
 
-                # Capture locally created variables back into globals for continuity
-                body = body + "\nglobal env\nenv.update(locals())"
-
                 # Prepare function wrappers to support expression result printing
-                source = f"async def func():\n{textwrap.indent(body, '  ')}"
+                env_update_code = "    global env\n    env.update(locals())"
+                source = f"async def func():\n{textwrap.indent(body, '    ')}\n{env_update_code}"
                 source_with_return = (
-                    f"async def func():\n{textwrap.indent('return ' + body, '  ')}"
+                    f"async def func():\n{textwrap.indent('return ' + body, '    ')}\n{env_update_code}"
                 )
 
                 # Provide `env` in globals for executed code
-                self.execution_globals.setdefault("env", {"client": self.client})
+                if "env" not in self.execution_globals:
+                    self.execution_globals["env"] = {"client": self.client}
+                
+                # Update env with current execution globals
+                self.execution_globals["env"].update(self.execution_globals)
 
                 try:
                     exec(source_with_return, self.execution_globals)
@@ -76,6 +78,9 @@ class AsyncInteractiveDebugger:
                 stdout_capture = io.StringIO()
                 with redirect_stdout(stdout_capture):
                     result = await func()
+
+                # Update execution_globals with variables from env after execution
+                self.execution_globals.update(self.execution_globals["env"])
 
                 captured = stdout_capture.getvalue()
                 if captured:
