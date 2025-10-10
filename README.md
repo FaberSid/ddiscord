@@ -1,4 +1,4 @@
-ddiscord: debugger for discord.py v2
+ddiscord: debugger for discord.py
 =====
 
 [![License](https://img.shields.io/badge/license-MIT-informational.svg)](./LICENSE)
